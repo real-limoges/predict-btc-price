@@ -4,6 +4,7 @@ This module grabs data from Quandl.com using their REST API.
 
 import quandl
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
 
 API_KEY = open('API_KEY.txt').read().strip()
 
@@ -68,5 +69,5 @@ if __name__ == '__main__':
     for feature_col in full_dataset.columns:
         full_dataset[feature_col] = full_dataset[feature_col].interpolate(
                                                         method='time') 
-
-    full_dataset.to_csv('../data/dataset.csv', index=False)
+    scaled_dataset = pd.DataFrame(StandardScaler().fit_transform(full_dataset), columns = full_dataset.columns, index = full_dataset.index) 
+    scaled_dataset.to_csv('../data/dataset.csv', index=False)
