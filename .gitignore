@@ -1,2 +1,3 @@
-./data/*
-./src/API_KEY.txt
+data/dataset.csv
+*.swp
+src/API_KEY.txt

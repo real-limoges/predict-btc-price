@@ -12,7 +12,7 @@ CLOSE = 'Close'
 RATE = 'Rate'
 US_10_YR = '10 YR'
 
-SOURCES = {'GOOG/INDEXDJX_DJI': 'DJIA',
+SOURCES = {'YAHOO/INDEX_DJI': 'DJIA',
            'USTREASURY/YIELD': 'US_10_YR',
            'YAHOO/INDEX_RUT': 'RUS2000',
            'YAHOO/INDEX_SSEC': 'SSEC',
@@ -66,6 +66,7 @@ if __name__ == '__main__':
     full_dataset = generate_dataset()
 
     for feature_col in full_dataset.columns:
-        full_dataset[feature_col] = interpolate(full_dataset[feature_col])
+        full_dataset[feature_col] = full_dataset[feature_col].interpolate(
+                                                        method='time') 
 
-    full_dataset.to_csv('../data/dataset.csv')
+    full_dataset.to_csv('../data/dataset.csv', index=False)
