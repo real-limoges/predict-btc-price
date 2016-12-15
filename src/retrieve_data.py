@@ -68,4 +68,4 @@ if __name__ == '__main__':
     for feature_col in full_dataset.columns:
         full_dataset[feature_col] = interpolate(full_dataset[feature_col])
 
-    full_dataset.to_csv('../dataset.csv')
+    full_dataset.to_csv('../data/dataset.csv')
