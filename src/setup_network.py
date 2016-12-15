@@ -21,7 +21,7 @@ def define_model(input_shape):
     '''
 
     bulding_rnn = tf.input_data(shape=input_shape)
-    bulding_rnn = tf.lstm(bulding_rnn, 32, activation='softsign',
+    bulding_rnn = tf.lstm(bulding_rnn, 32, activation='relu',
                           return_seq=False)
     bulding_rnn = tf.fully_connected(bulding_rnn, 8, activation='linear')
     bulding_rnn = tf.regression(
@@ -80,15 +80,16 @@ def create_train_test(X_frame, y_frame):
     return (final_X_train, final_X_test, final_y_train, final_y_test)
 
 
-def chart_predictions(predicted, actual):
+def chart_predictions(actual, predicted):
     plt.figure(figsize=(20,25))
 
-    for i, point in enumerate(predicted.T):
-        plt.plot(point, 'k-', label = 'Act/ual')
-        plt.plot(actual[:,i], 'c-', label='Forecast')
+    for i, point in enumerate(actual.T):
+        plt.subplot()
+        plt.plot(point, 'k-', label = 'Actual')
+        plt.plot(predicted[:,i], 'c-', label='Forecast')
         plt.legend()
 
-        plt.show()
+    plt.show()
 
 
 if __name__ == '__main__':
@@ -100,7 +101,7 @@ if __name__ == '__main__':
     final_X_train, final_X_test, final_y_train, final_y_test = create_train_test( final_data_matrix, target )
 
 
-    rnn_net.fit(final_X_train, final_y_train, n_epoch=25)
+    rnn_net.fit(final_X_train, final_y_train, n_epoch=250)
     rnn_net.save('../data/model.tfl')
     predicted = np.array(rnn_net.predict(final_X_test))
     
